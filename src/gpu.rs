@@ -6346,7 +6346,7 @@ mod tests {
         };
         let Ok(head_ckpt) = Checkpoint::open_single("/models/clef-flash/joint_head.safetensors")
         else {
-            eprintln!("SKIP: joint_head.safetensors not present; run in the aids-cuda container");
+            eprintln!("SKIP: joint_head.safetensors not present; run where the checkpoint is mounted");
             return;
         };
         let device = match Device::open() {
@@ -6401,7 +6401,7 @@ mod tests {
         };
         let Ok(head_ckpt) = Checkpoint::open_single("/models/clef-flash/joint_head.safetensors")
         else {
-            eprintln!("SKIP: joint_head.safetensors not present; run in the aids-cuda container");
+            eprintln!("SKIP: joint_head.safetensors not present; run where the checkpoint is mounted");
             return;
         };
         let device = match Device::open() {

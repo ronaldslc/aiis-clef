@@ -169,7 +169,7 @@ mod tests {
         match TextConfig::from_dir("/models/clef-flash-nvfp4") {
             Ok(c) => Some(c),
             Err(e) => {
-                eprintln!("SKIP: no checkpoint config ({e}); run in the aids-cuda container");
+                eprintln!("SKIP: no checkpoint config ({e}); run where the checkpoint is mounted");
                 None
             }
         }

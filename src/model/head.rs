@@ -699,7 +699,7 @@ pub(crate) mod support {
             }
         }
         let bytes: Vec<u8> = table.iter().flat_map(|v| v.to_le_bytes()).collect();
-        let path = std::env::temp_dir().join("aids_head_lm_head.safetensors");
+        let path = std::env::temp_dir().join("aiis_head_lm_head.safetensors");
         let mut header = format!(
             "{{\"lm_head.weight\":{{\"dtype\":\"BF16\",\"shape\":[{rows},{hidden_size}],\
              \"data_offsets\":[0,{}]}}}}",
@@ -729,7 +729,7 @@ mod tests {
         };
         let Ok(head_ckpt) = Checkpoint::open_single("/models/clef-flash/joint_head.safetensors")
         else {
-            eprintln!("SKIP: joint_head.safetensors not present; run in the aids-cuda container");
+            eprintln!("SKIP: joint_head.safetensors not present; run where the checkpoint is mounted");
             return;
         };
         let Ok(model_ckpt) = Checkpoint::open("/models/clef-flash") else {

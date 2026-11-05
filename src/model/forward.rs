@@ -134,7 +134,7 @@ mod tests {
             return;
         };
         let Ok(checkpoint) = Checkpoint::open("/models/clef-flash") else {
-            eprintln!("SKIP: /models/clef-flash not present; run in the aids-cuda container");
+            eprintln!("SKIP: /models/clef-flash not present; run where the checkpoint is mounted");
             return;
         };
         let config = TextConfig::from_dir("/models/clef-flash").expect("config.json");
@@ -220,7 +220,7 @@ mod tests {
             return;
         };
         let Ok(checkpoint) = Checkpoint::open("/models/clef-flash") else {
-            eprintln!("SKIP: /models/clef-flash not present; run in the aids-cuda container");
+            eprintln!("SKIP: /models/clef-flash not present; run where the checkpoint is mounted");
             return;
         };
         let config = TextConfig::from_dir("/models/clef-flash").expect("config.json");
