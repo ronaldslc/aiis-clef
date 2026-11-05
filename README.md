@@ -1,5 +1,7 @@
 # aiis-clef — AI inference server for the Clef decision model
 
+Hardware (RTX 5090) tuned fast Clef NVFP4 inference server. Outperforms vLLM with improved KL.
+
 A single-binary, CUDA-native inference server for **Clef**, a hybrid Gated-DeltaNet / attention
 decision model, served over the SystemOne contract (`POST /v1/systemone`). Rust for the host, our
 own CUDA kernels for the math, no Python in the serving path.
