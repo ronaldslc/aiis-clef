@@ -39,7 +39,7 @@ Full methodology, per-size charts, concurrency and the accuracy scatter: **[repo
 | **GPU** | NVIDIA RTX 5090 (sm_120). The kernels are compiled for `sm_120` only — a different card needs `ARCH` in `build.rs` changed, and the tile shapes are tuned for this one |
 | **Driver** | any driver that supports CUDA 13.0 (the build links `cuda-13030`) |
 | **CUDA toolkit** | CUDA 13.x, for `nvcc` at **build** time only. The runtime uses the driver API through `cudarc`, so the toolkit is not needed on the serving host |
-| **Rust** | 1.75+ (2021 edition) |
+| **Rust** | 1.97+ (2021 edition) — `ntex` 4.6 sets that floor |
 | **VRAM** | ~10 GB for the checkpoint plus the KV carry: **4,146 MiB** at a 131,072-token context, ~1.5 GB of graph pool. A 131k request peaks near **30 GB** |
 | **Checkpoint** | a Clef NVFP4 directory (compressed-tensors `safetensors` + `joint_head_config.json` + tokenizer), pointed at by `CLEF_MODEL_DIR` |
 
@@ -109,4 +109,4 @@ reports). `cudarc` is the CUDA driver binding; `tokenizers` and `safetensors` ar
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+Apache License 2.0 — see [LICENSE](LICENSE).

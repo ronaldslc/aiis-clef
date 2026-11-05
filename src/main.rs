@@ -15,7 +15,7 @@ mod types;
 
 use std::sync::Arc;
 
-use ntex::web::{self, App, HttpServer};
+use ntex::web::{self, App};
 
 use crate::engine::Engine;
 use crate::types::Health;
@@ -26,31 +26,29 @@ pub struct State {
     pub batcher: batch::Batcher,
 }
 
-#[web::get("/health")]
-async fn health(state: web::types::State<State>) -> web::types::Json<Health> {
+async fn health(state: State) -> web::types::Json<Health> {
     web::types::Json(state.engine.health())
 }
 
-#[web::post("/v1/systemone")]
-async fn systemone(
-    state: web::types::State<State>,
-    body: web::types::Json<types::SystemOneRequest>,
-) -> Result<web::types::Json<types::SystemOneResponse>, web::Error> {
+async fn systemone(state: State, body: web::types::Json<types::SystemOneRequest>) -> web::HttpResponse {
     let request = body.into_inner();
     if let Err(message) = request.validate() {
-        return Err(web::error::ErrorBadRequest(message).into());
+        return error_body(400, &message);
     }
 
     let started = std::time::Instant::now();
     let model = request.model_name();
 
     let questions = request.questions.clone();
-    let decided = state.batcher.submit(request).await.map_err(|e| {
-        if let Some(over) = e.downcast_ref::<engine::Refused>() {
-            return web::Error::from(web::error::ErrorBadRequest(over.to_string()));
+    let decided = match state.batcher.submit(request).await {
+        Ok(d) => d,
+        Err(e) => {
+            return match e.downcast_ref::<engine::Refused>() {
+                Some(over) => error_body(400, &over.to_string()),
+                None => error_body(500, &format!("{e:#}")),
+            }
         }
-        web::Error::from(web::error::ErrorInternalServerError(format!("{e:#}")))
-    })?;
+    };
 
     let answers = decided
         .probabilities
@@ -62,7 +60,7 @@ async fn systemone(
                 .map(|(_, q)| (id, types::systemone_answer(q, &probs)))
         })
         .collect();
-    Ok(web::types::Json(types::SystemOneResponse {
+    json_body(types::SystemOneResponse {
         model,
         answers,
         usage: types::Usage {
@@ -70,7 +68,23 @@ async fn systemone(
             output_tokens: 0,
         },
         latency_s: started.elapsed().as_secs_f64(),
-    }))
+    })
+}
+
+fn json_body<T: serde::Serialize>(value: T) -> web::HttpResponse {
+    let mut b = web::HttpResponse::builder(ntex::http::StatusCode::OK);
+    b.content_type("application/json");
+    b.body(serde_json::to_vec(&value).unwrap_or_default())
+}
+
+fn error_body(status: u16, message: &str) -> web::HttpResponse {
+    let body = serde_json::json!({ "error": { "message": message } });
+    let code = ntex::http::StatusCode::from_u16(status)
+        .unwrap_or(ntex::http::StatusCode::INTERNAL_SERVER_ERROR);
+    // ntex 4: `content_type` is a builder method, not a method on a finished response.
+    let mut b = web::HttpResponse::builder(code);
+    b.content_type("application/json");
+    b.body(serde_json::to_vec(&body).unwrap_or_default())
 }
 
 #[derive(Debug, PartialEq, Eq)]
@@ -211,20 +225,34 @@ async fn main() -> std::io::Result<()> {
         loaded.backend,
         loaded.quant
     );
-    HttpServer::new(move || {
+    let body_limit = state.engine.max_tokens().saturating_mul(16) + 1_048_576;
+    tracing::info!(body_limit, max_tokens = state.engine.max_tokens(), "json payload limit");
+
+    // ntex 4: the factory receives the server state by reference and the handlers take the application
+    // state as their first argument, so the state is cloned into a closure per route instead of being
+    // registered on the app. That keeps the routing readable and avoids the extractor generics.
+    web::server(move |_: &()| {
         let state = state.clone();
-
-        let body_limit = state.engine.max_tokens().saturating_mul(16) + 1_048_576;
-        tracing::info!(body_limit, max_tokens = state.engine.max_tokens(), "json payload limit");
         async move {
+            let cfg = web::WebAppConfig::new()
+                .set_state(web::types::JsonConfig::default().limit(body_limit));
+            let h = state.clone();
+            let s = state;
             App::new()
-                .state(state)
-
-                .state(web::types::JsonConfig::default().limit(body_limit))
-                .service((health, systemone))
+                .with_config(cfg)
+                .route("/health", web::get().to(move || {
+                    let h = h.clone();
+                    async move { health(h).await }
+                }))
+                .route("/v1/systemone", web::post().to(
+                    move |body: web::types::Json<types::SystemOneRequest>| {
+                        let s = s.clone();
+                        async move { systemone(s, body).await }
+                    },
+                ))
         }
     })
-    .bind(("0.0.0.0", port))?
+    .bind(("0.0.0.0", port), ntex::SharedCfg::default())?
     .run()
     .await
 }

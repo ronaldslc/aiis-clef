@@ -118,21 +118,24 @@ impl ModelSource {
                 Ok(dir.clone())
             }
             ModelSource::Hub { repo, revision } => {
-                let mut builder = hf_hub::api::sync::ApiBuilder::new().with_progress(false);
+                // **hf-hub 1.0** rewrote the API: `HFClientSync` replaces `Api`, a repo is addressed by
+                // (owner, name) rather than a single id, and a file is fetched through a builder whose
+                // `send()` returns the path in the cache. The cache directory is a client setting, not a
+                // per-call one, so it is applied when the client is built.
+                let mut builder = hf_hub::HFClientBuilder::new();
                 if let Some(dir) = cache_dir {
-                    builder = builder.with_cache_dir(dir.to_path_buf());
+                    builder = builder.cache_dir(dir);
                 }
-                let api = builder.build().context("cannot reach HuggingFace")?;
-                let repo = match revision {
-                    Some(rev) => api.repo(hf_hub::Repo::with_revision(
-                        repo.clone(),
-                        hf_hub::RepoType::Model,
-                        rev.clone(),
-                    )),
-                    None => api.model(repo.clone()),
-                };
+                let client = builder.build_sync().context("cannot reach HuggingFace")?;
+                let (owner, name) = repo
+                    .split_once('/')
+                    .with_context(|| format!("{repo:?} is not an owner/name repo id"))?;
+                let repo = client.model(owner, name);
                 let index = repo
-                    .get("model.safetensors.index.json")
+                    .download_file()
+                    .filename("model.safetensors.index.json")
+                    .maybe_revision(revision.clone())
+                    .send()
                     .with_context(|| format!("{repo:?} has no model.safetensors.index.json"))?;
                 let dir = index.parent().map(Path::to_path_buf).unwrap_or_default();
 
@@ -147,7 +150,11 @@ impl ModelSource {
                         .collect();
                     shards.sort_unstable();
                     for shard in shards {
-                        repo.get(shard).with_context(|| format!("cannot fetch {shard}"))?;
+                        repo.download_file()
+                            .filename(shard)
+                            .maybe_revision(revision.clone())
+                            .send()
+                            .with_context(|| format!("cannot fetch {shard}"))?;
                     }
                 }
                 Ok(dir)
