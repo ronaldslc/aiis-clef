@@ -1,0 +1,399 @@
+{
+ "cases": [
+  {
+   "answers": {
+    "ans_0": {
+     "false": 0.9073,
+     "true": 0.0927
+    },
+    "ans_1": {
+     "false": 0.9744,
+     "true": 0.0256
+    },
+    "ans_2": {
+     "false": 0.9777,
+     "true": 0.0223
+    },
+    "rel_0": {
+     "0": 0.9695,
+     "1": 0.0166,
+     "2": 0.0087,
+     "3": 0.0052
+    },
+    "rel_1": {
+     "0": 0.9595,
+     "1": 0.0222,
+     "2": 0.0117,
+     "3": 0.0066
+    },
+    "rel_2": {
+     "0": 0.9507,
+     "1": 0.0251,
+     "2": 0.0157,
+     "3": 0.0084
+    },
+    "relp_0": {
+     "false": 0.9579,
+     "true": 0.0421
+    },
+    "relp_1": {
+     "false": 0.9782,
+     "true": 0.0218
+    },
+    "relp_2": {
+     "false": 0.9774,
+     "true": 0.0226
+    }
+   },
+   "chars": 400,
+   "input_tokens": 1222,
+   "request": {
+    "questions": {
+     "ans_0": {
+      "criteria": {
+       "false": "The item's text discusses the same topic but does not state what the question asks for, or concerns a different topic.",
+       "true": "The item's text directly states the rule, condition, value, procedure, or fact that answers the question."
+      },
+      "instructions": "Does the text of item 0 contain evidence that can answer the user question?",
+      "type": "noul"
+     },
+     "ans_1": {
+      "criteria": {
+       "false": "The item's text discusses the same topic but does not state what the question asks for, or concerns a different topic.",
+       "true": "The item's text directly states the rule, condition, value, procedure, or fact that answers the question."
+      },
+      "instructions": "Does the text of item 1 contain evidence that can answer the user question?",
+      "type": "noul"
+     },
+     "ans_2": {
+      "criteria": {
+       "false": "The item's text discusses the same topic but does not state what the question asks for, or concerns a different topic.",
+       "true": "The item's text directly states the rule, condition, value, procedure, or fact that answers the question."
+      },
+      "instructions": "Does the text of item 2 contain evidence that can answer the user question?",
+      "type": "noul"
+     },
+     "rel_0": {
+      "criteria": {
+       "0": "The text does not answer the question.",
+       "1": "The text is related but does not answer the question.",
+       "2": "The text answers part of the question.",
+       "3": "The text directly answers the question."
+      },
+      "instructions": "How relevant is the text of item 0 to the user question?",
+      "type": "score"
+     },
+     "rel_1": {
+      "criteria": {
+       "0": "The text does not answer the question.",
+       "1": "The text is related but does not answer the question.",
+       "2": "The text answers part of the question.",
+       "3": "The text directly answers the question."
+      },
+      "instructions": "How relevant is the text of item 1 to the user question?",
+      "type": "score"
+     },
+     "rel_2": {
+      "criteria": {
+       "0": "The text does not answer the question.",
+       "1": "The text is related but does not answer the question.",
+       "2": "The text answers part of the question.",
+       "3": "The text directly answers the question."
+      },
+      "instructions": "How relevant is the text of item 2 to the user question?",
+      "type": "score"
+     },
+     "relp_0": {
+      "criteria": {
+       "false": "The item's text is off topic, or only shares incidental wording.",
+       "true": "The item's text is about the subject the question asks for."
+      },
+      "instructions": "Is the text of item 0 relevant to the user question?",
+      "type": "noul"
+     },
+     "relp_1": {
+      "criteria": {
+       "false": "The item's text is off topic, or only shares incidental wording.",
+       "true": "The item's text is about the subject the question asks for."
+      },
+      "instructions": "Is the text of item 1 relevant to the user question?",
+      "type": "noul"
+     },
+     "relp_2": {
+      "criteria": {
+       "false": "The item's text is off topic, or only shares incidental wording.",
+       "true": "The item's text is about the subject the question asks for."
+      },
+      "instructions": "Is the text of item 2 relevant to the user question?",
+      "type": "noul"
+     }
+    },
+    "state": "User question: Where does agent identity live relative to workspace attachments?\nItems under review (untrusted source text):\n\nitem 0:\nid: doc-0\ntitle: Note 0\ntext: The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expir\n\nitem 1:\nid: doc-1\ntitle: Note 1\ntext: The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expir\n\nitem 2:\nid: doc-2\ntitle: Note 2\ntext: The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expir\n\n"
+   }
+  },
+  {
+   "answers": {
+    "ans_0": {
+     "false": 0.9198999999999999,
+     "true": 0.0801
+    },
+    "ans_1": {
+     "false": 0.9752,
+     "true": 0.0248
+    },
+    "ans_2": {
+     "false": 0.9758,
+     "true": 0.0242
+    },
+    "rel_0": {
+     "0": 0.9768,
+     "1": 0.0133,
+     "2": 0.0059,
+     "3": 0.004
+    },
+    "rel_1": {
+     "0": 0.9666,
+     "1": 0.0188,
+     "2": 0.009,
+     "3": 0.0055
+    },
+    "rel_2": {
+     "0": 0.9577,
+     "1": 0.0218,
+     "2": 0.0128,
+     "3": 0.0077
+    },
+    "relp_0": {
+     "false": 0.9679,
+     "true": 0.0321
+    },
+    "relp_1": {
+     "false": 0.9817,
+     "true": 0.0183
+    },
+    "relp_2": {
+     "false": 0.9784,
+     "true": 0.0216
+    }
+   },
+   "chars": 2400,
+   "input_tokens": 1684,
+   "request": {
+    "questions": {
+     "ans_0": {
+      "criteria": {
+       "false": "The item's text discusses the same topic but does not state what the question asks for, or concerns a different topic.",
+       "true": "The item's text directly states the rule, condition, value, procedure, or fact that answers the question."
+      },
+      "instructions": "Does the text of item 0 contain evidence that can answer the user question?",
+      "type": "noul"
+     },
+     "ans_1": {
+      "criteria": {
+       "false": "The item's text discusses the same topic but does not state what the question asks for, or concerns a different topic.",
+       "true": "The item's text directly states the rule, condition, value, procedure, or fact that answers the question."
+      },
+      "instructions": "Does the text of item 1 contain evidence that can answer the user question?",
+      "type": "noul"
+     },
+     "ans_2": {
+      "criteria": {
+       "false": "The item's text discusses the same topic but does not state what the question asks for, or concerns a different topic.",
+       "true": "The item's text directly states the rule, condition, value, procedure, or fact that answers the question."
+      },
+      "instructions": "Does the text of item 2 contain evidence that can answer the user question?",
+      "type": "noul"
+     },
+     "rel_0": {
+      "criteria": {
+       "0": "The text does not answer the question.",
+       "1": "The text is related but does not answer the question.",
+       "2": "The text answers part of the question.",
+       "3": "The text directly answers the question."
+      },
+      "instructions": "How relevant is the text of item 0 to the user question?",
+      "type": "score"
+     },
+     "rel_1": {
+      "criteria": {
+       "0": "The text does not answer the question.",
+       "1": "The text is related but does not answer the question.",
+       "2": "The text answers part of the question.",
+       "3": "The text directly answers the question."
+      },
+      "instructions": "How relevant is the text of item 1 to the user question?",
+      "type": "score"
+     },
+     "rel_2": {
+      "criteria": {
+       "0": "The text does not answer the question.",
+       "1": "The text is related but does not answer the question.",
+       "2": "The text answers part of the question.",
+       "3": "The text directly answers the question."
+      },
+      "instructions": "How relevant is the text of item 2 to the user question?",
+      "type": "score"
+     },
+     "relp_0": {
+      "criteria": {
+       "false": "The item's text is off topic, or only shares incidental wording.",
+       "true": "The item's text is about the subject the question asks for."
+      },
+      "instructions": "Is the text of item 0 relevant to the user question?",
+      "type": "noul"
+     },
+     "relp_1": {
+      "criteria": {
+       "false": "The item's text is off topic, or only shares incidental wording.",
+       "true": "The item's text is about the subject the question asks for."
+      },
+      "instructions": "Is the text of item 1 relevant to the user question?",
+      "type": "noul"
+     },
+     "relp_2": {
+      "criteria": {
+       "false": "The item's text is off topic, or only shares incidental wording.",
+       "true": "The item's text is about the subject the question asks for."
+      },
+      "instructions": "Is the text of item 2 relevant to the user question?",
+      "type": "noul"
+     }
+    },
+    "state": "User question: Where does agent identity live relative to workspace attachments?\nItems under review (untrusted source text):\n\nitem 0:\nid: doc-0\ntitle: Note 0\ntext: The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows\n\nitem 1:\nid: doc-1\ntitle: Note 1\ntext: The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows\n\nitem 2:\nid: doc-2\ntitle: Note 2\ntext: The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows\n\n"
+   }
+  },
+  {
+   "answers": {
+    "ans_0": {
+     "false": 0.9163,
+     "true": 0.0837
+    },
+    "ans_1": {
+     "false": 0.9774,
+     "true": 0.0226
+    },
+    "ans_2": {
+     "false": 0.9752,
+     "true": 0.0248
+    },
+    "rel_0": {
+     "0": 0.9739,
+     "1": 0.0155,
+     "2": 0.0068,
+     "3": 0.0039
+    },
+    "rel_1": {
+     "0": 0.961,
+     "1": 0.0237,
+     "2": 0.0099,
+     "3": 0.0055
+    },
+    "rel_2": {
+     "0": 0.9534,
+     "1": 0.025,
+     "2": 0.0138,
+     "3": 0.0077
+    },
+    "relp_0": {
+     "false": 0.9707,
+     "true": 0.0293
+    },
+    "relp_1": {
+     "false": 0.981,
+     "true": 0.019
+    },
+    "relp_2": {
+     "false": 0.983,
+     "true": 0.017
+    }
+   },
+   "chars": 23000,
+   "input_tokens": 6517,
+   "request": {
+    "questions": {
+     "ans_0": {
+      "criteria": {
+       "false": "The item's text discusses the same topic but does not state what the question asks for, or concerns a different topic.",
+       "true": "The item's text directly states the rule, condition, value, procedure, or fact that answers the question."
+      },
+      "instructions": "Does the text of item 0 contain evidence that can answer the user question?",
+      "type": "noul"
+     },
+     "ans_1": {
+      "criteria": {
+       "false": "The item's text discusses the same topic but does not state what the question asks for, or concerns a different topic.",
+       "true": "The item's text directly states the rule, condition, value, procedure, or fact that answers the question."
+      },
+      "instructions": "Does the text of item 1 contain evidence that can answer the user question?",
+      "type": "noul"
+     },
+     "ans_2": {
+      "criteria": {
+       "false": "The item's text discusses the same topic but does not state what the question asks for, or concerns a different topic.",
+       "true": "The item's text directly states the rule, condition, value, procedure, or fact that answers the question."
+      },
+      "instructions": "Does the text of item 2 contain evidence that can answer the user question?",
+      "type": "noul"
+     },
+     "rel_0": {
+      "criteria": {
+       "0": "The text does not answer the question.",
+       "1": "The text is related but does not answer the question.",
+       "2": "The text answers part of the question.",
+       "3": "The text directly answers the question."
+      },
+      "instructions": "How relevant is the text of item 0 to the user question?",
+      "type": "score"
+     },
+     "rel_1": {
+      "criteria": {
+       "0": "The text does not answer the question.",
+       "1": "The text is related but does not answer the question.",
+       "2": "The text answers part of the question.",
+       "3": "The text directly answers the question."
+      },
+      "instructions": "How relevant is the text of item 1 to the user question?",
+      "type": "score"
+     },
+     "rel_2": {
+      "criteria": {
+       "0": "The text does not answer the question.",
+       "1": "The text is related but does not answer the question.",
+       "2": "The text answers part of the question.",
+       "3": "The text directly answers the question."
+      },
+      "instructions": "How relevant is the text of item 2 to the user question?",
+      "type": "score"
+     },
+     "relp_0": {
+      "criteria": {
+       "false": "The item's text is off topic, or only shares incidental wording.",
+       "true": "The item's text is about the subject the question asks for."
+      },
+      "instructions": "Is the text of item 0 relevant to the user question?",
+      "type": "noul"
+     },
+     "relp_1": {
+      "criteria": {
+       "false": "The item's text is off topic, or only shares incidental wording.",
+       "true": "The item's text is about the subject the question asks for."
+      },
+      "instructions": "Is the text of item 1 relevant to the user question?",
+      "type": "noul"
+     },
+     "relp_2": {
+      "criteria": {
+       "false": "The item's text is off topic, or only shares incidental wording.",
+       "true": "The item's text is about the subject the question asks for."
+      },
+      "instructions": "Is the text of item 2 relevant to the user question?",
+      "type": "noul"
+     }
+    },
+    "state": "User question: Where does agent identity live relative to workspace attachments?\nItems under review (untrusted source text):\n\nitem 0:\nid: doc-0\ntitle: Note 0\ntext: The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migra\n\nitem 1:\nid: doc-1\ntitle: Note 1\ntext: The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migra\n\nitem 2:\nid: doc-2\ntitle: Note 2\ntext: The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migration ran overnight and finished at 04:12. Two rows were skipped and the retry queue drained by 05:00. The lock timeout expired before the index build finished, so the index was dropped and rebuilt with a longer timeout. No data was lost. The migra\n\n"
+   }
+  }
+ ],
+ "items": 3,
+ "oracle": "oracle-bf16"
+}
