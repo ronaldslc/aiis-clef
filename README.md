@@ -34,6 +34,20 @@ converted with the E4M3 scale bits preserved.
 
 Full methodology, per-size charts, concurrency and the accuracy scatter: **[report/benchmark.html](report/benchmark.html)**.
 
+## The charts
+
+Every chart carries its own title and legend; the report they come from is [report/benchmark.html](report/benchmark.html).
+
+![latency: time to a complete answer, log scale](report/charts/latency.png)
+
+![throughput: input tokens answered per second](report/charts/throughput.png)
+
+![concurrency: wall time for N requests sent at once](report/charts/concurrency.png)
+
+![accuracy: KL against the full-precision answer, lower is closer](report/charts/accuracy.png)
+
+![perplexity: the same distance as a ratio against the reference floor](report/charts/perplexity.png)
+
 ## Requirements
 
 | | |
@@ -101,6 +115,91 @@ a request's answer does not depend on what it was batched with. Weights stay res
 NVFP4/FP8 form; the GEMMs read them directly. The three carries across a chunk boundary — the GDN's
 recurrent state, the conv's history and attention's KV — are explicit buffers, which is what makes a
 chunked request bit-identical to one pass.
+
+## What is inside: the named techniques
+
+Grouped by layer, with the canonical name and what it does here.
+
+### Serving and scheduling
+
+| technique | what we do |
+| --- | --- |
+| **Continuous batching** | every in-flight request's next chunk rides one pass; a pass carries up to `kv_slots` requests |
+| **Chunked prefill** | a request is cut into rung-sized chunks (64 … 8,192 rows), each chunk a pass over the whole stack |
+| **Pass fitting to a graphed geometry** | a shared pass's total must be in `pass_geometries()`; the chunks are water-filled to reach the nearest one — never padded, never eager |
+| **Segmented KV cache** | one contiguous segment per in-flight request (`slot x capacity`); the mask's lower bound is the **segment base**, not the pass's first row |
+| **CUDA Graphs, per pass geometry** | the whole layer stack is captured once per geometry and replayed; the key is the pass geometry, not the token count |
+| **Dense warm-up ladder** | every geometry a pass can take is captured at load, so serving never captures cold |
+| **On-idle graph capture** | a geometry the warm-up missed is captured on the engine thread's idle turn, never on the serving path |
+| **Single retained allocation for all graphs** | one block sized by `max(high_water)`, not the sum of arenas — 768 MiB instead of 2.4 GB |
+| **Graph memory pool** | the device pool is created and trimmed explicitly (`cuMemPoolCreate` / `cuMemPoolTrimTo`) |
+| **Deferred long requests** | a 131k request cannot hold the queue; it is deferred while short requests drain |
+| **Backpressure** | the listener resumes only when the queue can take work |
+| **CPU affinity pinning** | the engine thread is pinned so the GPU launch thread does not migrate |
+| **Zero-copy checkpoint** | safetensors are `mmap`ed and borrowed, never read into a second buffer |
+
+### Attention
+
+| technique | what we do |
+| --- | --- |
+| **Flash-Decoding (split-K over keys)** | long sequences split the key range across blocks and a combine kernel reduces the partials |
+| **GQA / MQA** | 16 query heads over 4 KV heads; k/v are repeat-interleaved on device |
+| **Varlen packed attention** | several requests in one launch with **per-token** bounds (`seq_start`, `seq_end`, `cpos`, `cbase`) — no per-request scalar |
+| **Tensor-core attention** | `mma.sync` with fp16/bf16 fragments and a shared-memory staged pipeline |
+| **Warp specialisation** | 8 MMA (consumer) warps + 4 producer warps, named barriers, `setmaxnreg` to move registers to the consumers |
+| **Multi-stage SMEM pipeline** | `cp.async` producer → `mbarrier` → MMA consumer |
+| **Partial rotary + mRoPE** | rotary on 25% of the head dims, interleaved mRoPE sections, tables built once on device |
+| **Fused QK-norm + RoPE + q/gate split** | three ops in one kernel, bit-exact against the chain |
+| **Sink path** | the head reads a per-request accumulated hidden buffer instead of a second pass driver |
+
+### Linear attention (Gated DeltaNet)
+
+| technique | what we do |
+| --- | --- |
+| **Chunked gated delta rule** | the recurrence is evaluated a 64-row chunk at a time with a WY-style chunk formulation (W/U products), which is what makes chunked prefill possible for a linear-attention model |
+| **Sequential scan with per-slot state** | the state carry is explicit; the chunk-parallel scan was measured and refuted (2x work for at most 25% makespan) |
+| **State carry across chunk boundaries** | each request's recurrent state lives in its own slot; a pass boundary is a state save/restore |
+| **Fused conv + SiLU + history save** | causal conv, activation and the conv history write in one kernel |
+| **Tap-window conv prep** | `gdn_conv_prep` reads only the window its taps need — 683.6 → 559.6 us, 11x fewer L1 sectors |
+| **Fused gated RMSNorm + quantiser** | norm and the NVFP4/FP8 quantiser in one pass: 555 → 287 MB per layer-pass |
+
+### GEMM and quantisation
+
+| technique | what we do |
+| --- | --- |
+| **NVFP4 block-scaled W4A4 MMA** | Blackwell `mma.sync.aligned.kind` with E2M1 weights and E4M3 scales per 16 values — the checkpoint's own tensors, read directly |
+| **Swizzled scale layout** | the reference's 128x4 swizzle computed once at load, not per launch |
+| **TMA (tensor memory accelerator)** | `cp.async.bulk.tensor` for A, B and the epilogue store, with `mbarrier` transaction counts |
+| **Multi-stage software pipeline** | `STAGES 3` double/triple buffering in shared memory |
+| **Warp specialisation + `setmaxnreg`** | a producer warpgroup feeds, consumer warpgroups MMA; registers are moved to the consumers at runtime |
+| **Persistent CTA scheduler** | `grid = min(work_tiles, SMs x CTAs/SM)`, each CTA walks a strided tile set |
+| **Epilogue in its own SMEM** | `EPI_SEPARATE` so a persistent CTA can start tile N+1 before tile N's store is read |
+| **Fused gated GEMM** | the MLP's `gate` and `up` in one launch, `silu(g) * u` written straight out as quantised NVFP4 |
+| **FP8 E4M3 GEMM with per-token scales** | row-wise activation scales, two MMA atoms (fast / half-rate) shipped together |
+| **bf16 GEMM with split-K** | key-split for small `m`, partials reduced in a second kernel |
+| **On-the-fly activation quantisation** | the quantiser is fused into the producer, not a separate pass |
+| **Dual-output norm** | `rms_norm` → FP8 **and** bf16 in one pass (3.0x on the kernel) |
+
+### The decision head
+
+| technique | what we do |
+| --- | --- |
+| **Single-pass joint decision head** | every question is answered from one forward pass; no token generation |
+| **Gathered `lm_head` rows** | only the option tokens' rows of the 248k x 4096 head are gathered, not the whole matrix |
+| **Its own graph ladder** | the head has a rung ladder of its own (48 graphs), captured separately from the body |
+
+### Correctness and measurement method
+
+| technique | what we do |
+| --- | --- |
+| **Bit-exactness gates** | every fusion is gated against the unfused chain it replaces, at two sizes, asserting **exact** equality |
+| **Determinism gate ("same call twice")** | two identical calls must produce identical bytes — this is what caught a rounding change and a two-writer scale race |
+| **KL against a bf16 oracle** | the accuracy invariant, checked at three token counts |
+| **Ablation cubins** | the same kernel compiled with a piece removed, so "how much is the epilogue" is a subtraction |
+| **A/B in one binary** | both variants ship as cubins and an environment switch selects one, so a comparison is one window and one binary |
+| **Tile / occupancy model** | `tiles = ceil(m/M) x ceil(n/N)`, waves, makespan, fitted from measurements — used to reject tiles without building them |
+| **Roofline and counter checks** | `ncu` for tensor-pipe and DRAM utilisation, `cuobjdump -res-usage` for registers and spills |
+| **Paired rounds, rotated ladder** | three rotated rounds, medians, a settle between arms, and a paired A/B for anything under the cross-window drift |
 
 ## Attribution
 
