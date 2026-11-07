@@ -125,11 +125,8 @@ fn value_len(v: &Value) -> usize {
     }
 }
 
-fn value_as_key(v: &Value) -> String {
-    match v {
-        Value::String(s) => s.clone(),
-        other => other.to_string(),
-    }
+pub(crate) fn value_as_key(v: &Value) -> String {
+    crate::encode::render(v)
 }
 
 fn round4(x: f32) -> f64 {

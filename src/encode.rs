@@ -79,10 +79,17 @@ pub fn question_options(question: &Question) -> Vec<(String, Option<Value>)> {
         }
         QuestionType::Choice => match &question.criteria {
             Some(Value::Object(m)) => {
-                let mut keys: Vec<String> = m.keys().cloned().collect();
-                keys.sort();
-                keys.into_iter().map(|k| (k, None)).collect()
+                let mut entries: Vec<(&String, &Value)> = m.iter().collect();
+                entries.sort_by(|a, b| a.0.cmp(b.0));
+                entries
+                    .into_iter()
+                    .map(|(id, description)| (id.clone(), Some(description.clone())))
+                    .collect()
             }
+            Some(Value::Array(a)) => a
+                .iter()
+                .map(|v| (crate::types::value_as_key(v), None))
+                .collect(),
             _ => Vec::new(),
         },
         QuestionType::Score => match &question.criteria {
